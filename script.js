@@ -93,14 +93,34 @@ loadClassButton.addEventListener("click", () => {
     db.collection("classes").doc("class1").get()
     .then(doc => {
         if (doc.exists) {
-            classListInput.value = doc.data().students.join("\n");
+            let data = doc.data();
+            classListInput.value = data.students.join("\n");
+
+            // Display roles in the UI
+            let rolesText = "Assigned Roles:\n";
+            for (const student in data.roles) {
+                rolesText += `${student}: ${data.roles[student]}\n`;
+            }
+            resultText.textContent = rolesText;
+
+            // Load Homework Assignments
+            if (data.homework) {
+                let homeworkText = "Assigned Homework:\n";
+                for (const role in data.homework) {
+                    homeworkText += `${role}: ${data.homework[role]}\n`;
+                }
+                homeworkResult.textContent = homeworkText;
+            }
+
+            alert("Class loaded successfully!");
         } else {
-            alert("No class list found!");
+            alert("No class data found!");
         }
     }).catch(error => {
-        console.error("Error loading class list: ", error);
+        console.error("Error loading class data: ", error);
     });
 });
+
 
 // Assign Homework to Firebase
 assignHomeworkButton.addEventListener("click", () => {
@@ -114,3 +134,16 @@ assignHomeworkButton.addEventListener("click", () => {
         console.error("Error assigning homework: ", error);
     });
 });
+if (doc.exists) {
+    let data = doc.data();
+    classListInput.value = data.students.join("\n");
+
+    // Display roles in the UI
+    let rolesText = "Assigned Roles:\n";
+    for (const student in data.roles) {
+        rolesText += `${student}: ${data.roles[student]}\n`;
+    }
+
+    resultText.textContent = rolesText; // Show roles under the wheel
+}
+

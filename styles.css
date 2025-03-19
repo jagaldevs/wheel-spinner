@@ -1,0 +1,68 @@
+/* Dracula Theme */
+body {
+    background-color: #282a36;
+    color: #f8f8f2;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.container {
+    margin: 20px auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+    background-color: #44475a;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+h1, h3 {
+    color: #ff79c6;
+}
+
+button {
+    background-color: #bd93f9;
+    color: #282a36;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #ffb86c;
+}
+
+#classList {
+    width: 100%;
+    height: 100px;
+    background-color: #6272a4;
+    color: #f8f8f2;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+select {
+    background-color: #6272a4;
+    color: #f8f8f2;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#result, #homeworkResult {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #50fa7b;
+}
+
+canvas {
+    margin-top: 20px;
+    background-color: #282a36;
+    border: 2px solid #ff79c6;
+    border-radius: 50%;
+}

@@ -9,17 +9,28 @@ const homeworkSelect = document.getElementById("homeworkOptions");
 const assignHomeworkButton = document.getElementById("assignHomework");
 const homeworkResult = document.getElementById("homeworkResult");
 
-// Firebase setup
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyD5R32C9jlXB-MuzKW1hmHH1mHr4Nun7Iw",
+  authDomain: "wheel-spinner-ffb00.firebaseapp.com",
+  projectId: "wheel-spinner-ffb00",
+  storageBucket: "wheel-spinner-ffb00.firebasestorage.app",
+  messagingSenderId: "86872222259",
+  appId: "1:86872222259:web:e94287c8a1439d9feb5146",
+  measurementId: "G-3WSDN5BKN7"
 };
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 // Wheel Data
 const roles = ["King", "Noble", "Knight", "Peasant", "Peasant", "Peasant", "Peasant"];

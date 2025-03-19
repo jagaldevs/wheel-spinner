@@ -1,23 +1,3 @@
-const canvas = document.getElementById("wheelCanvas");
-const ctx = canvas.getContext("2d");
-const spinButton = document.getElementById("spinButton");
-const resultText = document.getElementById("result");
-const classListInput = document.getElementById("classList");
-const saveClassButton = document.getElementById("saveClass");
-const loadClassButton = document.getElementById("loadClass");
-const homeworkSelect = document.getElementById("homeworkOptions");
-const assignHomeworkButton = document.getElementById("assignHomework");
-const homeworkResult = document.getElementById("homeworkResult");
-
-
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyD5R32C9jlXB-MuzKW1hmHH1mHr4Nun7Iw",
   authDomain: "wheel-spinner-ffb00.firebaseapp.com",
@@ -29,8 +9,20 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// DOM Elements
+const canvas = document.getElementById("wheelCanvas");
+const ctx = canvas.getContext("2d");
+const spinButton = document.getElementById("spinButton");
+const resultText = document.getElementById("result");
+const classListInput = document.getElementById("classList");
+const saveClassButton = document.getElementById("saveClass");
+const loadClassButton = document.getElementById("loadClass");
+const homeworkSelect = document.getElementById("homeworkOptions");
+const assignHomeworkButton = document.getElementById("assignHomework");
+const homeworkResult = document.getElementById("homeworkResult");
 
 // Wheel Data
 const roles = ["King", "Noble", "Knight", "Peasant", "Peasant", "Peasant", "Peasant"];
@@ -54,6 +46,7 @@ function drawWheel() {
 
 drawWheel();
 
+// Spin the Wheel
 spinButton.addEventListener("click", () => {
     if (spinning) return;
     spinning = true;
@@ -83,29 +76,41 @@ spinButton.addEventListener("click", () => {
     animate();
 });
 
-// Save Class List
+// Save Class List to Firebase
 saveClassButton.addEventListener("click", () => {
     let students = classListInput.value.split("\n").filter(s => s.trim() !== "");
-    db.collection("classes").doc("class1").set({ students }).then(() => {
-        alert("Class saved!");
+    
+    db.collection("classes").doc("class1").set({ students })
+    .then(() => {
+        alert("Class list saved!");
+    }).catch(error => {
+        console.error("Error saving class list: ", error);
     });
 });
 
-// Load Class List
+// Load Class List from Firebase
 loadClassButton.addEventListener("click", () => {
-    db.collection("classes").doc("class1").get().then(doc => {
+    db.collection("classes").doc("class1").get()
+    .then(doc => {
         if (doc.exists) {
             classListInput.value = doc.data().students.join("\n");
+        } else {
+            alert("No class list found!");
         }
+    }).catch(error => {
+        console.error("Error loading class list: ", error);
     });
 });
 
-// Assign Homework
+// Assign Homework to Firebase
 assignHomeworkButton.addEventListener("click", () => {
     let selectedHomework = homeworkSelect.value;
+    
     db.collection("classes").doc("class1").update({
         homework: selectedHomework
     }).then(() => {
         homeworkResult.textContent = `Assigned: ${selectedHomework}`;
+    }).catch(error => {
+        console.error("Error assigning homework: ", error);
     });
 });
